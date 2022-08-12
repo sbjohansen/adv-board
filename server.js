@@ -19,10 +19,6 @@ const store = MongoStore.create({
   collection: 'sessions',
 });
 
-store.on('error', (error) => {
-  console.log(error);
-});
-
 app.use(
   session({
     secret: 'ssshhhhh',

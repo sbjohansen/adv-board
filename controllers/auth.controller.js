@@ -42,10 +42,8 @@ exports.login = async (req, res) => {
         if (!isPasswordValid) {
           return res.status(400).send({ message: 'Login or password is incorrect' });
         }
-        const session = req.session;
-        session.login = user.login;
-        req.session = session;
-        console.log(req.session);
+        req.session.login = user.login;
+        req.session.save();
         res.status(200).json({ message: 'User logged in ' + user.login });
       }
     } else {
