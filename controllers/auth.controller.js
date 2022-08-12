@@ -42,6 +42,10 @@ exports.login = async (req, res) => {
         if (!isPasswordValid) {
           return res.status(400).send({ message: 'Login or password is incorrect' });
         }
+        const session = req.session;
+        session.login = user.login;
+        req.session = session;
+        console.log(req.session);
         res.status(200).json({ message: 'User logged in ' + user.login });
       }
     } else {
@@ -49,5 +53,14 @@ exports.login = async (req, res) => {
     }
   } catch (err) {
     res.status(500).send({ message: err.message });
+  }
+};
+
+exports.getUser = async (req, res) => {
+    console.log(req.session)
+  if (req.session.login) {
+    res.status(200).json({ login: req.session.login });
+  } else {
+    res.status(401).send({ message: 'User is not authorized' });
   }
 };
