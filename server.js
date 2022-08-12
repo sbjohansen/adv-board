@@ -3,7 +3,7 @@ const cors = require('cors');
 const path = require('path');
 const session = require('express-session');
 const mongoose = require('mongoose');
-const MongoDBStore = require('connect-mongodb-session')(session);
+const MongoStore = require('connect-mongo');
 const app = express();
 
 //environment variables
@@ -14,8 +14,8 @@ if (NODE_ENV === 'production') uri = process.env.DB_URL;
 else if (NODE_ENV === 'test') uri = 'mongodb://localhost:27017/advBookTest';
 else uri = 'mongodb://localhost:27017/advBook';
 
-const store = new MongoDBStore({
-  uri,
+const store = MongoStore.create({
+  mongoUrl: uri,
   collection: 'sessions',
 });
 

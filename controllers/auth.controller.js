@@ -57,7 +57,6 @@ exports.login = async (req, res) => {
 };
 
 exports.getUser = async (req, res) => {
-    console.log(req.session)
   if (req.session.login) {
     res.status(200).json({ login: req.session.login });
   } else {
