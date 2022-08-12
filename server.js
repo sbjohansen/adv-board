@@ -1,12 +1,11 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-const socket = require('socket.io');
 
 const app = express();
 const mongoose = require('mongoose');
-const helmet = require('helmet');
 
+//environment variables
 let uri = '';
 const { NODE_ENV } = process.env;
 
@@ -16,18 +15,29 @@ else uri = 'mongodb://localhost:27017/advBook';
 
 //import routes
 const advertsRoutes = require('./routes/adverts.routes');
+const usersRoutes = require('./routes/users.routes');
+const authsRoutes = require('./routes/auths.routes');
 
 //middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cors());
-app.use(helmet());
-app.use((req, res, next) => {
-  req.io = io;
-  next();
-});
+app.use(express.static(path.join(__dirname, '/client/build')));
 
+//routes
 app.use('/api/', advertsRoutes);
+app.use('/api/auth/', authsRoutes);
+
+//production mode
+if(NODE_ENV === 'production') {
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname + '/client/build/index.html'));
+    });
+}
+
+app.use((req, res) => {
+  res.status(404).send('404 page not found...');
+});
 
 const server = app.listen(process.env.PORT || 8000, () => {
   if (NODE_ENV !== 'test') {
@@ -35,12 +45,7 @@ const server = app.listen(process.env.PORT || 8000, () => {
   }
 });
 
-const io = socket(server);
-
-io.on('connection', (socket) => {
-  console.log('Client connected with ID: ' + socket.id);
-});
-
+//connect to database
 mongoose.connect(uri, { useNewUrlParser: true });
 const db = mongoose.connection;
 
