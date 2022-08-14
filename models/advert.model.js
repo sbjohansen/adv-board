@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const User = require('../models/user.model');
 
 const advertSchema = new mongoose.Schema({
   title: {
@@ -19,7 +20,7 @@ const advertSchema = new mongoose.Schema({
   },
   image: {
     type: String,
-    required: true,
+    required: false,
   },
   address: {
     type: String,

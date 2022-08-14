@@ -5,8 +5,9 @@ const session = require('express-session');
 const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo');
 const app = express();
+require('dotenv').config();
 
-//environment variables
+//connect to db
 let uri = '';
 const { NODE_ENV } = process.env;
 
@@ -14,14 +15,20 @@ if (NODE_ENV === 'production') uri = process.env.DB_URL;
 else if (NODE_ENV === 'test') uri = 'mongodb://localhost:27017/advBookTest';
 else uri = 'mongodb://localhost:27017/advBook';
 
+//connect to db
 const store = MongoStore.create({
   mongoUrl: uri,
   collection: 'sessions',
 });
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
+//middleware
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(cors());
 app.use(
   session({
-    secret: 'ssshhhhh',
+    secret: process.env.SESSION_SECRET,
     resave: true,
     saveUninitialized: true,
     store: store,
@@ -29,30 +36,23 @@ app.use(
   })
 );
 
-//connect to database
-mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-
 //import routes
 const advertsRoutes = require('./routes/adverts.routes');
 const usersRoutes = require('./routes/users.routes');
 const authRoutes = require('./routes/auth.routes');
 
-//middleware
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
-app.use(cors('*'));
-app.use(express.static(path.join(__dirname, '/client/build')));
-
-//routes
-app.use('/api/', advertsRoutes);
-app.use('/auth', authRoutes);
-
-//production mode
+// Static files
 if (NODE_ENV === 'production') {
   app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname + '/client/build/index.html'));
   });
 }
+app.use(express.static(path.join(__dirname, '/client/public')));
+
+//routes
+app.use('/api/', advertsRoutes);
+app.use('/auth', authRoutes);
+
 
 app.use((req, res) => {
   res.status(404).send({ message: 'Not found...' });
