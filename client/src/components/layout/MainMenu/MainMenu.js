@@ -2,7 +2,6 @@ import { Navbar, Nav, Input } from 'rsuite';
 import HomeIcon from '@rsuite/icons/legacy/Home';
 import AdminIcon from '@rsuite/icons/Admin';
 
-
 const MainMenu = () => {
   return (
     <Navbar>
