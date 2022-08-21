@@ -51,7 +51,7 @@ app.use(express.static(path.join(__dirname, '/client/public')));
 
 //routes
 app.use('/api/', advertsRoutes);
-app.use('/auth', authRoutes);
+app.use('/api/auth', authRoutes);
 
 
 app.use((req, res) => {

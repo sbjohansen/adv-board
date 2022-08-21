@@ -1,29 +1,38 @@
 import { Routes, Route } from 'react-router-dom';
 import MainLayout from './components/layout/MainLayout/MainLayout';
-import Container from 'rsuite/Container';
-import { CustomProvider } from 'rsuite';
-import 'rsuite/dist/rsuite.min.css';
 import Advert from './components/features/Advert/Advert';
-import Adverts from './components/features/Adverts/Adverts';
 // import routes
 import Home from './components/pages/Home/Home';
 import NotFound from './components/pages/NotFound/NotFound';
+import AdvAdd from './components/features/AdvAdd/AdvAdd';
+import AdvEdit from './components/features/AdvEdit/AdvEdit';
+import AdvRemove from './components/features/AdvRemove/AdvRemove';
+import Search from './components/features/Search/Search';
+import Login from './components/features/Login/Login';
+import Register from './components/features/Register/Register';
+import Logout from './components/features/Logout/Logout';
+
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
 
 function App() {
-
   return (
-    <CustomProvider theme="dark">
-      <MainLayout>
-        <Container>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/ads/:id" element={<Advert />} />
-            <Route path="/ads" element={<Adverts />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Container>
-      </MainLayout>
-    </CustomProvider>
+    <MainLayout>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/advert/:id" element={<Advert />} />
+        <Route path="/advert/add" element={<AdvAdd />} />
+        <Route path="/advert/edit/:id" element={<AdvEdit />} />
+        <Route path="/advert/remove/:id" element={<AdvRemove />} />
+        <Route path="/search/:searchPhase" element={<Search />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/logout" element={<Logout />} />
+        <Route path="/NotFound" element={<NotFound />} />
+      </Routes>
+    </MainLayout>
   );
 }
 

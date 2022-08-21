@@ -1,12 +1,10 @@
 import MainMenu from './../MainMenu/MainMenu';
-import Footer from './../Footer/Footer';
+import Container from 'react-bootstrap/Container';
 
 const MainLayout = ({ children }) => (
   <div>
     <MainMenu />
-    {children}
-
-    <Footer />
+    <Container className="mt-3">{children}</Container>
   </div>
 );
 

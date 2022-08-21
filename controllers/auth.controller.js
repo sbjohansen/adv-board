@@ -6,7 +6,7 @@ const fs = require('fs');
 exports.register = async (req, res) => {
   const fileType = await getImageFileType(req.file);
   try {
-    const { login, password, email, avatar } = req.body;
+    const { login, password, tel, avatar } = req.body;
 
     if (
       login &&
@@ -25,7 +25,7 @@ exports.register = async (req, res) => {
       const user = new User({
         login,
         password: await bcrypt.hash(password, 10),
-        email,
+        tel,
         avatar: req.file.filename,
       });
       await user.save();

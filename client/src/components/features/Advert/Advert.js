@@ -1,38 +1,21 @@
-import { Panel, PanelGroup, Row, Col, Divider } from 'rsuite';
+import Card from 'react-bootstrap/Card';
+import ListGroup from 'react-bootstrap/ListGroup';
 
 const Advert = ({ _id, title, description, pubDate, price, image, address, user }) => {
   return (
-    <div>
-      <Row>
-        <PanelGroup bordered>
-          <Col xs={12} sm={12} md={12} lg={12}>
-            <Panel bodyFill style={{ display: 'inline-block', width: '240px' }}>
-              <img src={image} height="240" alt={title} />
-              <Panel header={title}>
-                <p>
-                  <small>{description}</small>
-                </p>
-              </Panel>
-            </Panel>
-          </Col>
-
-          <Col xs={12} sm={12} md={12} lg={12}>
-            <Panel header="Date">
-              <p>{pubDate}</p>
-            </Panel>
-            <Panel header="Price">
-              <p>{price}</p>
-            </Panel>
-            <Panel header="Address">
-              <p>{address}</p>
-            </Panel>
-            <Panel header="User">
-              <p>{user}</p>
-            </Panel>
-          </Col>
-        </PanelGroup>
-      </Row>
-    </div>
+    <Card style={{ width: '18rem' }}>
+      <Card.Img variant="top" src={image} />
+      <Card.Body>
+        <Card.Title>{title}</Card.Title>
+        <Card.Text>{description}</Card.Text>
+      </Card.Body>
+      <ListGroup className="list-group-flush">
+        <ListGroup.Item>Price {price}$</ListGroup.Item>
+      </ListGroup>
+      <Card.Body>
+        <Card.Link href="#">Read more</Card.Link>
+      </Card.Body>
+    </Card>
   );
 };
 

@@ -1,9 +1,6 @@
-const Footer = () => (
-  <footer id="sticky-footer" className="py-4 mt-5 bg-dark text-white-50">
-    <div className="text-center">
-      <small>Copyright &copy; Slawomir Baran Johansen 2022</small>
-    </div>
-  </footer>
-);
 
-export default Footer;
+const Footer = () => {
+  <Footer>Copyright &copy; Slawomir Baran Johansen 2022</Footer>;
+};
+
+export default <i class="fas fa-mouse-pointer    "></i>;

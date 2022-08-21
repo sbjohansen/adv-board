@@ -1,15 +1,13 @@
 import Advert from '../Advert/Advert';
-import { FlexboxGrid, Divider, Container } from 'rsuite';
+import Container from 'react-bootstrap/Container';
 
 const Adverts = ({ adverts }) => {
   return (
     <div>
       <Container>
-        <FlexboxGrid justify="space-around">
-          {adverts.map((advert) => (
-            <Advert key={advert._id} {...advert} />
-          ))}
-        </FlexboxGrid>
+        {adverts.map((advert) => (
+          <Advert key={advert._id} {...advert} />
+        ))}
       </Container>
     </div>
   );

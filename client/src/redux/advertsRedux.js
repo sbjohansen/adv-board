@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { API_URL } from '../config';
-
+import initialState from './initialState';
 //Selectors
 export const getAdverts = ({ adverts }) => adverts.data;
 export const getRequest = ({ adverts }) => adverts.request;
@@ -102,15 +102,7 @@ export const deleteAdvert = (id) => async (dispatch) => {
   }
 };
 
-// Initial State
-const initialState = {
-  data: [],
-  request: {
-    pending: false,
-    error: null,
-    success: null,
-  },
-};
+
 
 // Reducer
 export default function reducer(state = initialState, action = {}) {

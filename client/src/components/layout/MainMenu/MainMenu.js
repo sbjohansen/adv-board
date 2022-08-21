@@ -1,32 +1,31 @@
-import { Navbar, Nav, Input } from 'rsuite';
-import HomeIcon from '@rsuite/icons/legacy/Home';
-import AdminIcon from '@rsuite/icons/Admin';
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 
 const MainMenu = () => {
   return (
-    <Navbar>
-      <Navbar.Brand href="#">AdvBoard</Navbar.Brand>
-      <Nav>
-        <Nav.Item icon={<HomeIcon />}>Home</Nav.Item>
-        <Nav.Menu title="About">
-          <Nav.Item>Company</Nav.Item>
-          <Nav.Item>Team</Nav.Item>
-          <Nav.Menu title="Contact">
-            <Nav.Item>Via email</Nav.Item>
-            <Nav.Item>Via telephone</Nav.Item>
-          </Nav.Menu>
-        </Nav.Menu>
-      </Nav>
-      <Nav pullRight>
-        <Nav.Item>
-          <Input placeholder="Login" />
-        </Nav.Item>
-        <Nav.Item>
-          <Input placeholder="Password" type="password" />
-        </Nav.Item>
-        <Nav.Item icon={<AdminIcon />}>Login</Nav.Item>
-      </Nav>
-    </Navbar>
+    <div>
+      <Navbar className="mb-2" sticky="top" bg="light" variant="light" >
+        <Container>
+          <Navbar.Brand href="#home">AdvBoard</Navbar.Brand>
+          <Nav className="me-auto">
+            <Nav.Link href="#home">Home</Nav.Link>
+            <Nav.Link href="#features">About</Nav.Link>
+            <Nav.Link href="#pricing">Pricing</Nav.Link>
+          </Nav>
+          <Form className="d-flex">
+            <Form.Control type="search" placeholder="Search" className="me-2" aria-label="Search" />
+            <Button variant="outline-success">Search</Button>
+          </Form>
+          <Nav className="ml-auto">
+            <Nav.Link href="/login">Login</Nav.Link>
+            <Nav.Link href="/register">Register</Nav.Link>
+          </Nav>
+        </Container>
+      </Navbar>
+    </div>
   );
 };
 
