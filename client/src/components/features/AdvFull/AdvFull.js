@@ -27,7 +27,7 @@ const AdvFull = (props) => {
 
   const advData = advert[0];
   const user = useSelector(getUser);
-  const userLogin = user.login || null;
+  
   return (
     <div>
       {request.pending ? (
@@ -86,7 +86,7 @@ const AdvFull = (props) => {
               </Card>
             </Col>
           </Row>
-          {userLogin && userLogin === advData.user && (
+          {user !== null && user.login === advData.user &&  (
             <Row className="d-flex justify-content-end">
               <Button
                 style={{ width: '100px' }}

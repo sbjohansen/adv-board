@@ -8,18 +8,17 @@ import { getUser } from '../../../redux/usersRedux';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-
 const AdvForm = ({ advert }) => {
   const advData = advert || '';
   const userName = useSelector(getUser);
-
+  console.log(userName);
   const [title, setTitle] = useState(advData.title || '');
   const [description, setDescription] = useState(advData.description || '');
   const [price, setPrice] = useState(advData.price || '');
   const [image, setImage] = useState(advData.image || '');
   const [address, setAddress] = useState(advData.address || '');
-  const [pubDate, setPubDate] = useState(new Date().toJSON().slice(0,10).replace(/-/g,'/') || '');
-  const [user, setUser] = useState(advData.user || userName.login);
+  const [pubDate, setPubDate] = useState(new Date().toJSON().slice(0, 10).replace(/-/g, '/') || '');
+  const [user, setUser] = useState(userName.login || advData.user);
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -32,15 +31,14 @@ const AdvForm = ({ advert }) => {
     formData.append('address', address);
     formData.append('pubDate', pubDate);
     formData.append('user', user);
-  
+
     const options = {
       method: 'POST',
       body: formData,
       credentials: 'include',
     };
-   fetch(`${API_URL}/ads`, options)
-   navigate('/');
-
+    fetch(`${API_URL}/ads`, options);
+    navigate('/');
   };
 
   return (

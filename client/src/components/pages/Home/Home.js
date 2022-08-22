@@ -5,6 +5,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import { Row, Col, Button, Container } from 'react-bootstrap';
 import Adverts from '../../features/Adverts/Adverts';
 import { getUser } from '../../../redux/usersRedux';
+import { Link } from 'react-router-dom';
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -14,7 +15,7 @@ const HomePage = () => {
 
   useEffect(() => {
     dispatch(fetchAdverts());
-  }, [dispatch]);
+  }, []);
 
   return (
     <div>
@@ -22,7 +23,7 @@ const HomePage = () => {
         {user && (
           <Row className="mb-5 d-flex-end">
             <Col>
-              <Button variant="outline-success" href="/advert/add">
+              <Button variant="outline-success" to="/advert/add" as={Link}>
                 New Advert
               </Button>
             </Col>
