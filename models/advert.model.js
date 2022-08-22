@@ -4,19 +4,19 @@ const User = require('../models/user.model');
 const advertSchema = new mongoose.Schema({
   title: {
     type: String,
-    required: false,
+    required: true,
   },
   description: {
     type: String,
-    required: false,
+    required: true,
   },
   pubDate: {
     type: String,
-    required: false,
+    required: true,
   },
   price: {
-    type: String,
-    required: false,
+    type: Number,
+    required: true,
   },
   image: {
     type: String,
@@ -24,7 +24,7 @@ const advertSchema = new mongoose.Schema({
   },
   address: {
     type: String,
-    required: false,
+    required: true,
   },
   user: {
     type: String,

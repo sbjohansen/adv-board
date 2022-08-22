@@ -7,6 +7,7 @@ import NotFound from './components/pages/NotFound/NotFound';
 import AdvAdd from './components/features/AdvAdd/AdvAdd';
 import AdvEdit from './components/features/AdvEdit/AdvEdit';
 import AdvRemove from './components/features/AdvRemove/AdvRemove';
+import AdvFull from './components/features/AdvFull/AdvFull';
 import Search from './components/features/Search/Search';
 import Login from './components/features/Login/Login';
 import Register from './components/features/Register/Register';
@@ -30,7 +31,7 @@ function App() {
     <MainLayout>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/advert/:id" element={<Advert />} />
+        <Route path="/advert/:advertId" element={<AdvFull />} />
         <Route path="/advert/add" element={<AdvAdd />} />
         <Route path="/advert/edit/:id" element={<AdvEdit />} />
         <Route path="/advert/remove/:id" element={<AdvRemove />} />

@@ -1,13 +1,17 @@
 import Advert from '../Advert/Advert';
-import Container from 'react-bootstrap/Container';
+import { Container, Col, Row } from 'react-bootstrap';
 
 const Adverts = ({ adverts }) => {
   return (
     <div>
       <Container>
-        {adverts.map((advert) => (
-          <Advert key={advert._id} {...advert} />
-        ))}
+        <Row>
+          {adverts.map((advert) => (
+            <Col md={4} className="mb-3">
+              <Advert key={advert._id} {...advert} advertId={advert._id} />
+            </Col>
+          ))}
+        </Row>
       </Container>
     </div>
   );

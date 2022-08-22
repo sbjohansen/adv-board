@@ -25,14 +25,19 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 //middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: ["http://localhost:3000", "http://localhost:8000"],
+  credentials: true 
+}));
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    store: store,
-    cookie: { maxAge: 1000 * 60 * 60 * 24 * 7 },
+    resave: true,
+    saveUninitialized: true,
+    store: MongoStore.create(mongoose.connection),
+    cookie: {
+      secure: process.env.NODE_ENV == "production",
+    }
   })
 );
 
@@ -47,12 +52,14 @@ if (NODE_ENV === 'production') {
     res.sendFile(path.join(__dirname + '/client/build/index.html'));
   });
 }
-app.use(express.static(path.join(__dirname, '/client/public')));
+app.use(express.static(path.join(__dirname, '/uploads/')));
+console.log(path.join(__dirname, '/uploads'))
+app.use(express.static(path.join(__dirname, '/client/build')));
+app.use(express.static(path.join(__dirname, '/public')));
 
 //routes
 app.use('/api/', advertsRoutes);
 app.use('/api/auth', authRoutes);
-
 
 app.use((req, res) => {
   res.status(404).send({ message: 'Not found...' });

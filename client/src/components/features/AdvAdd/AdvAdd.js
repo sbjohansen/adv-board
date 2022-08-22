@@ -15,20 +15,26 @@ const AdvForm = ({ advert }) => {
   const [price, setPrice] = useState(advData.price || '');
   const [image, setImage] = useState(advData.image || '');
   const [address, setAddress] = useState(advData.address || '');
-  const [pubDate, setPubDate] = useState(new Date().toISOString() || '');
+  const [pubDate, setPubDate] = useState(new Date().toJSON().slice(0,10).replace(/-/g,'/') || '');
   const [user, setUser] = useState(advData.user || '');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newAdvert = {
-      title,
-      description,
-      price,
-      address,
-      pubDate,
-      user,
-    }
-    dispatch(addAdvert(newAdvert));
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('description', description);
+    formData.append('price', price);
+    formData.append('image', image);
+    formData.append('address', address);
+    formData.append('pubDate', pubDate);
+    formData.append('user', user);
+  
+  const options = {
+    method: 'POST',
+    body: formData,
+    credentials: 'include',
+  }
+   fetch(`${API_URL}/ads`, options)
   };
 
   return (

@@ -16,6 +16,7 @@ const STOP_REQUEST = createActionName('STOP_REQUEST');
 const ERROR_REQUEST = createActionName('ERROR_REQUEST');
 
 const LOAD_ADVERTS = createActionName('LOAD_ADVERTS');
+const LOAD_ADVERT = createActionName('LOAD_ADVERT');
 const ADD_AD = createActionName('ADD_AD');
 
 export const startRequest = () => ({ type: START_REQUEST });
@@ -23,6 +24,7 @@ export const stopRequest = () => ({ type: STOP_REQUEST });
 export const errorRequest = (error) => ({ type: ERROR_REQUEST, payload: { error } });
 
 export const loadAdverts = (adverts) => ({ type: LOAD_ADVERTS, payload: { adverts } });
+export const loadAdvert = (advert) => ({ type: LOAD_ADVERT, payload: { advert } });
 export const addAd = (payload) => ({ type: ADD_AD, payload });
 
 //THUNKS
@@ -42,15 +44,14 @@ export const fetchAdverts = () => async (dispatch) => {
 export const fetchAdvert = (id) => async (dispatch) => {
   dispatch(startRequest());
   try {
-    const response = await fetch(`${API_URL}/ads/${id}`);
-    const advert = await response.json();
-    dispatch(loadAdverts(advert));
+    let response = await axios.get(`${API_URL}/ads/${id}`);
+    await new Promise((resolve, reject) => setTimeout(resolve, 2000));
+    dispatch(loadAdvert(response.data));
+    dispatch(stopRequest());
   } catch (error) {
     dispatch(errorRequest(error));
-  } finally {
-    dispatch(stopRequest());
   }
-};
+}
 
 export const addAdvert = (advert) => async (dispatch) => {
   console.log(advert)
@@ -138,6 +139,11 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         data: [...action.payload.adverts],
+      };
+    case LOAD_ADVERT:
+      return {
+        ...state,
+        data: [...state.data, action.payload.advert],
       };
       case ADD_AD:
         return [...state, { ...action.payload, id: shortid() }];

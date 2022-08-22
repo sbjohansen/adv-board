@@ -3,7 +3,7 @@ const multer = require('multer');
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, './client/uploads/');
+    cb(null, './public/uploads/');
   },
   filename: (req, file, cb) => {
     const [name, ext] = file.originalname.split('.');

@@ -13,20 +13,23 @@ exports.getAdvertByID = async (req, res, next) => {
   try {
     const advert = await Advert.findById(req.params.id);
     if (!advert) return res.status(404).json({ message: 'Advert not found' });
-    else res.json(advert);
+    res.json(advert);
+    console.log(advert);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
 
 exports.addAdvert = async (req, res) => {
- const { title, description, price, address, image, user } = req.body;
- console.log(req.body);
+  const { title, description, price, pubDate, address, user } = req.body;
+  console.log(req.body);
   try {
     const advert = new Advert({
       title,
       description,
       price,
+      pubDate,
+      image: req.file.filename,
       address,
       user,
     });
@@ -34,7 +37,6 @@ exports.addAdvert = async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
-
 };
 
 exports.deleteAdvert = async (req, res, next) => {

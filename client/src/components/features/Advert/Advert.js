@@ -1,10 +1,13 @@
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
+import { IMGS_URL } from '../../../config.js';
+import { Link } from 'react-router-dom';
 
 const Advert = ({ _id, title, description, pubDate, price, image, address, user }) => {
+
   return (
-    <Card style={{ width: '18rem' }}>
-      <Card.Img variant="top" src={image} />
+    <Card style={{ width: '18rem', height: '24rem' }}>
+      <Card.Img variant="top" src={IMGS_URL + image} />
       <Card.Body>
         <Card.Title>{title}</Card.Title>
         <Card.Text>{description}</Card.Text>
@@ -13,7 +16,9 @@ const Advert = ({ _id, title, description, pubDate, price, image, address, user 
         <ListGroup.Item>Price {price}$</ListGroup.Item>
       </ListGroup>
       <Card.Body>
-        <Card.Link href="#">Read more</Card.Link>
+        <Card.Link href={'/advert/' + _id}>Read more</Card.Link>
+        <Link to={'/advert/' + _id}>
+        </Link>
       </Card.Body>
     </Card>
   );
