@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { API_URL } from '../config';
 import initialState from './initialState';
+import shortid from 'shortid';
 //Selectors
 export const getAdverts = ({ adverts }) => adverts.data;
 export const getRequest = ({ adverts }) => adverts.request;
@@ -15,12 +16,14 @@ const STOP_REQUEST = createActionName('STOP_REQUEST');
 const ERROR_REQUEST = createActionName('ERROR_REQUEST');
 
 const LOAD_ADVERTS = createActionName('LOAD_ADVERTS');
+const ADD_AD = createActionName('ADD_AD');
 
 export const startRequest = () => ({ type: START_REQUEST });
 export const stopRequest = () => ({ type: STOP_REQUEST });
 export const errorRequest = (error) => ({ type: ERROR_REQUEST, payload: { error } });
 
 export const loadAdverts = (adverts) => ({ type: LOAD_ADVERTS, payload: { adverts } });
+export const addAd = (payload) => ({ type: ADD_AD, payload });
 
 //THUNKS
 
@@ -49,24 +52,21 @@ export const fetchAdvert = (id) => async (dispatch) => {
   }
 };
 
-export const createAdvert = (advert) => async (dispatch) => {
+export const addAdvert = (advert) => async (dispatch) => {
+  console.log(advert)
   dispatch(startRequest());
   try {
-    const response = await fetch(`${API_URL}/ads`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(advert),
-    });
+    console.log(advert)
+    const response = await axios.post(`${API_URL}/ads`, advert);
+      
     const newAdvert = await response.json();
-    dispatch(loadAdverts(newAdvert));
+    dispatch(addAd(newAdvert));
   } catch (error) {
     dispatch(errorRequest(error));
   } finally {
     dispatch(stopRequest());
   }
-};
+} 
 
 export const updateAdvert = (advert) => async (dispatch) => {
   dispatch(startRequest());
@@ -139,6 +139,8 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         data: [...action.payload.adverts],
       };
+      case ADD_AD:
+        return [...state, { ...action.payload, id: shortid() }];
     default:
       return state;
   }

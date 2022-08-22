@@ -19,7 +19,7 @@ const HomePage = () => {
       <Container>
         <Row className="mb-5 d-flex-end">
           <Col>
-            <Button variant="outline-success" href="/advform">
+            <Button variant="outline-success" href="/advert/add">
               New Advert
             </Button>
           </Col>

@@ -1,9 +1,90 @@
-const AdvAdd = () => {
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Container from 'react-bootstrap/Container';
+import { useDispatch } from 'react-redux';
+import { addAdvert } from '../../../redux/advertsRedux';
+import { useState } from 'react';
+import { API_URL } from '../../../config';
+
+const AdvForm = ({ advert }) => {
+  const advData = advert || '';
+
+  const dispatch = useDispatch();
+  const [title, setTitle] = useState(advData.title || '');
+  const [description, setDescription] = useState(advData.description || '');
+  const [price, setPrice] = useState(advData.price || '');
+  const [image, setImage] = useState(advData.image || '');
+  const [address, setAddress] = useState(advData.address || '');
+  const [pubDate, setPubDate] = useState(new Date().toISOString() || '');
+  const [user, setUser] = useState(advData.user || '');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newAdvert = {
+      title,
+      description,
+      price,
+      address,
+      pubDate,
+      user,
+    }
+    dispatch(addAdvert(newAdvert));
+  };
+
   return (
     <div>
-      <h1>AdvAdd</h1>
+      <Container>
+        <Form onSubmit={handleSubmit}>
+          <Form.Group className="mb-2">
+            <Form.Label>Title</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Title"
+              className="me-2"
+              aria-label="Title"
+              onChange={(e) => setTitle(e.target.value)}
+            />
+            <Form.Label>Description</Form.Label>
+            <Form.Control
+              as="textarea"
+              rows="3"
+              placeholder="Description"
+              className="me-2"
+              aria-label="Description"
+              onChange={(e) => setDescription(e.target.value)}
+            />
+            <Form.Label>Price</Form.Label>
+            <Form.Control
+              type="number"
+              placeholder="Price"
+              className="me-2"
+              aria-label="Price"
+              onChange={(e) => setPrice(e.target.value)}
+            />
+            <Form.Label>Image</Form.Label>
+            <Form.Control
+              type="file"
+              className="me-2"
+              aria-label="Image"
+              onChange={(e) => setImage(e.target.files[0])}
+            />
+            <Form.Label>Address</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Address"
+              className="me-2"
+              aria-label="Address"
+              onChange={(e) => setAddress(e.target.value)}
+            />
+          </Form.Group>
+          <Button variant="primary" type="submit">
+            {' '}
+            Submit{' '}
+          </Button>
+        </Form>
+      </Container>{' '}
     </div>
   );
 };
 
-export default AdvAdd;
+export default AdvForm;

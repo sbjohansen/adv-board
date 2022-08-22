@@ -9,11 +9,9 @@ const MainMenu = () => {
     <div>
       <Navbar className="mb-2" sticky="top" bg="light" variant="light" >
         <Container>
-          <Navbar.Brand href="#home">AdvBoard</Navbar.Brand>
+          <Navbar.Brand href="/">AdvBoard</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#features">About</Nav.Link>
-            <Nav.Link href="#pricing">Pricing</Nav.Link>
+            <Nav.Link href="/">Home</Nav.Link>
           </Nav>
           <Form className="d-flex">
             <Form.Control type="search" placeholder="Search" className="me-2" aria-label="Search" />

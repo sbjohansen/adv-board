@@ -63,7 +63,7 @@ const AdvForm = () => {
               placeholder="Address"
               className="me-2"
               aria-label="Address"
-              onChane={setAddress}
+              onChange={setAddress}
             />
           </Form.Group>
           <Button variant="primary" type="submit">

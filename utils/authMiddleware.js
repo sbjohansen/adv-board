@@ -1,8 +1,8 @@
 const authMiddleware = (req, res, next) => {
-  if (req.session.login) {
+  if (req.session) {
     next();
   } else {
-    res.status(401).send({ message: 'User is not authorized' });
+    res.status(401).send({ message: 'Unauthorized' });
   }
 };
 

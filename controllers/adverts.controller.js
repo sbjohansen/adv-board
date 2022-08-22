@@ -19,22 +19,22 @@ exports.getAdvertByID = async (req, res, next) => {
   }
 };
 
-exports.addAdvert = async (req, res, next) => {
+exports.addAdvert = async (req, res) => {
+ const { title, description, price, address, image, user } = req.body;
+ console.log(req.body);
   try {
     const advert = new Advert({
-      title: req.body.title,
-      description: req.body.description,
-      pubDate: req.body.pubDate,
-      address: req.body.address,
-      price: req.body.price,
-      image: req.body.image,
-      user: req.body.user,
+      title,
+      description,
+      price,
+      address,
+      user,
     });
-    const newAdvert = await advert.save();
-    res.json(newAdvert);
+    await advert.save();
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
+
 };
 
 exports.deleteAdvert = async (req, res, next) => {

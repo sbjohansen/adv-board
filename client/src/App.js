@@ -11,13 +11,21 @@ import Search from './components/features/Search/Search';
 import Login from './components/features/Login/Login';
 import Register from './components/features/Register/Register';
 import Logout from './components/features/Logout/Logout';
-
+import { fetchUser } from './redux/usersRedux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchUser());
+  }, []);
+
   return (
     <MainLayout>
       <Routes>
