@@ -1,6 +1,7 @@
 import { API_URL } from '../config';
 import axios from 'axios';
 
+
 const createActionName = (actionName) => `app/users/${actionName}`;
 export const getUser = ({ users }) => users;
 
@@ -28,12 +29,12 @@ export const fetchUser = () => async (dispatch) => {
   }
 };
 
-const usersReducer = (state = {}, action) => {
+const usersReducer = (state = [], action) => {
   switch (action.type) {
     case LOG_IN:
       return action.payload;
     case LOG_OUT:
-      return {};
+      return null;
     default:
       return state;
   }

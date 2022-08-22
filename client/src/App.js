@@ -1,6 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
 import MainLayout from './components/layout/MainLayout/MainLayout';
-import Advert from './components/features/Advert/Advert';
 // import routes
 import Home from './components/pages/Home/Home';
 import NotFound from './components/pages/NotFound/NotFound';
@@ -12,20 +11,17 @@ import Search from './components/features/Search/Search';
 import Login from './components/features/Login/Login';
 import Register from './components/features/Register/Register';
 import Logout from './components/features/Logout/Logout';
-import { fetchUser } from './redux/usersRedux';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
+import { API_URL } from './config';
 
 function App() {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchUser());
-  }, []);
+  const options = {
+    method: 'GET',
+  };
+  fetch(`${API_URL}/auth/user`, options).then((res) => {
+    if (res.status === 200) {
+      return console.log('You are logged in');
+    }
+  });
 
   return (
     <MainLayout>
@@ -34,7 +30,7 @@ function App() {
         <Route path="/advert/:advertId" element={<AdvFull />} />
         <Route path="/advert/add" element={<AdvAdd />} />
         <Route path="/advert/edit/:id" element={<AdvEdit />} />
-        <Route path="/advert/remove/:id" element={<AdvRemove />} />
+        <Route path="/advert/remove/:advertId" element={<AdvRemove />} />
         <Route path="/search/:searchPhase" element={<Search />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />

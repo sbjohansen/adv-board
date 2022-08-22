@@ -16,9 +16,7 @@ const Advert = ({ _id, title, description, pubDate, price, image, address, user 
         <ListGroup.Item>Price {price}$</ListGroup.Item>
       </ListGroup>
       <Card.Body>
-        <Card.Link href={'/advert/' + _id}>Read more</Card.Link>
-        <Link to={'/advert/' + _id}>
-        </Link>
+      <Card.Link variant="outline-success" to={'/advert/' + _id } as={Link}>Read more</Card.Link>
       </Card.Body>
     </Card>
   );

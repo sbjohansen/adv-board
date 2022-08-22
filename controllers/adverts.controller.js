@@ -43,14 +43,12 @@ exports.deleteAdvert = async (req, res, next) => {
   try {
     const advert = await Advert.findById(req.params.id);
     if (!advert) return res.status(404).json({ message: 'Advert not found' });
-    else {
-      await advert.remove();
-      res.json({ message: 'Advert deleted' });
-    }
+    await advert.remove();
+    res.json({ message: 'Advert deleted' });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
-};
+}
 
 exports.updateAdvert = async (req, res, next) => {
   try {

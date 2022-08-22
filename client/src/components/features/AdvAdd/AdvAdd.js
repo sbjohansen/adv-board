@@ -1,22 +1,26 @@
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
-import { useDispatch } from 'react-redux';
-import { addAdvert } from '../../../redux/advertsRedux';
+
 import { useState } from 'react';
 import { API_URL } from '../../../config';
+import { getUser } from '../../../redux/usersRedux';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+
 
 const AdvForm = ({ advert }) => {
   const advData = advert || '';
+  const userName = useSelector(getUser);
 
-  const dispatch = useDispatch();
   const [title, setTitle] = useState(advData.title || '');
   const [description, setDescription] = useState(advData.description || '');
   const [price, setPrice] = useState(advData.price || '');
   const [image, setImage] = useState(advData.image || '');
   const [address, setAddress] = useState(advData.address || '');
   const [pubDate, setPubDate] = useState(new Date().toJSON().slice(0,10).replace(/-/g,'/') || '');
-  const [user, setUser] = useState(advData.user || '');
+  const [user, setUser] = useState(advData.user || userName.login);
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -29,12 +33,14 @@ const AdvForm = ({ advert }) => {
     formData.append('pubDate', pubDate);
     formData.append('user', user);
   
-  const options = {
-    method: 'POST',
-    body: formData,
-    credentials: 'include',
-  }
+    const options = {
+      method: 'POST',
+      body: formData,
+      credentials: 'include',
+    };
    fetch(`${API_URL}/ads`, options)
+   navigate('/');
+
   };
 
   return (

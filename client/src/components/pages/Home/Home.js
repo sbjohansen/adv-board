@@ -4,11 +4,13 @@ import { useEffect } from 'react';
 import Spinner from 'react-bootstrap/Spinner';
 import { Row, Col, Button, Container } from 'react-bootstrap';
 import Adverts from '../../features/Adverts/Adverts';
+import { getUser } from '../../../redux/usersRedux';
 
 const HomePage = () => {
   const dispatch = useDispatch();
   const adverts = useSelector(getAdverts);
   const request = useSelector(getRequest);
+  const user = useSelector(getUser);
 
   useEffect(() => {
     dispatch(fetchAdverts());
@@ -17,14 +19,15 @@ const HomePage = () => {
   return (
     <div>
       <Container>
-        <Row className="mb-5 d-flex-end">
-          <Col>
-            <Button variant="outline-success" href="/advert/add">
-              New Advert
-            </Button>
-          </Col>
-        </Row>
-
+        {user && (
+          <Row className="mb-5 d-flex-end">
+            <Col>
+              <Button variant="outline-success" href="/advert/add">
+                New Advert
+              </Button>
+            </Col>
+          </Row>
+        )}
         {request.pending ? (
           <div className="d-flex justify-content-center">
             <Spinner animation="border" role="status">
