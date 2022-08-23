@@ -4,7 +4,6 @@ import MainLayout from './components/layout/MainLayout/MainLayout';
 import Home from './components/pages/Home/Home';
 import NotFound from './components/pages/NotFound/NotFound';
 import AdvAdd from './components/features/AdvAdd/AdvAdd';
-import AdvEdit from './components/features/AdvEdit/AdvEdit';
 import AdvRemove from './components/features/AdvRemove/AdvRemove';
 import AdvFull from './components/features/AdvFull/AdvFull';
 import Search from './components/features/Search/Search';
@@ -12,8 +11,13 @@ import Login from './components/features/Login/Login';
 import Register from './components/features/Register/Register';
 import Logout from './components/features/Logout/Logout';
 import { API_URL } from './config';
+import { useDispatch } from 'react-redux';
+import { fetchAdverts } from './redux/advertsRedux';
+import { useEffect } from 'react';
 
 function App() {
+  const dispatch = useDispatch();
+
   const options = {
     method: 'GET',
   };
@@ -22,6 +26,10 @@ function App() {
       return console.log('You are logged in');
     }
   });
+
+  useEffect(() => {
+    dispatch(fetchAdverts());
+  }, []);
 
   return (
     <MainLayout>
