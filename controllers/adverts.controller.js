@@ -65,9 +65,10 @@ exports.updateAdvert = async (req, res, next) => {
       advert.image = req.file.filename;
     }
     await advert.save();
-    res.json({ message: 'Advert updated' });
+    res.json({ message: 'Advert updated ' });
   } catch (err) {
     res.status(500).json({ message: err.message });
+
   }
 }
 
