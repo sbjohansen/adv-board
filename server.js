@@ -9,7 +9,7 @@ require('dotenv').config();
 
 //connect to db
 let uri = '';
-const NODE_ENV = process.env.NODE_ENV;
+const NODE_ENV = process.env;
 
 if (NODE_ENV === 'production') uri = process.env.DB_URL;
 else if (NODE_ENV === 'test') uri = 'mongodb://localhost:27017/advBookTest';
@@ -53,7 +53,6 @@ if (NODE_ENV === 'production') {
 app.use(express.static(path.join(__dirname, '/client/build')));
 app.use(express.static(path.join(__dirname, '/uploads/')));
 app.use(express.static(path.join(__dirname, '/public')));
-app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html')));
 
 //routes
 app.use('/api/', advertsRoutes);
