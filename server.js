@@ -8,12 +8,9 @@ const app = express();
 require('dotenv').config();
 
 //connect to db
-let uri = '';
+let uri = process.env.DB_URL;
 const NODE_ENV = process.env;
 
-if (NODE_ENV === 'production') uri = process.env.DB_URL;
-else if (NODE_ENV === 'test') uri = 'mongodb://localhost:27017/advBookTest';
-else uri = 'mongodb://localhost:27017/advBook';
 
 //connect to db
 
