@@ -9,7 +9,7 @@ router.get('/ads', AdvertController.getAllAdverts);
 router.get('/ads/:id', AdvertController.getAdvertByID);
 router.post('/ads', authMiddleware, imageUpload.single('image'), AdvertController.addAdvert);
 router.delete('/ads/:id', authMiddleware, AdvertController.deleteAdvert);
-router.put('/ads/:id', authMiddleware, AdvertController.updateAdvert);
+router.put('/ads/:id', authMiddleware, imageUpload.single('image'), AdvertController.updateAdvert);
 router.get('/ads/search/:searchPhase', AdvertController.getAdvertBySearchPhase);
 
 module.exports = router;

@@ -29,7 +29,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/advert/:advertId" element={<AdvFull />} />
         <Route path="/advert/add" element={<AdvAdd />} />
-        <Route path="/advert/edit/:id" element={<AdvEdit />} />
+        <Route path="/advert/edit/:advertId" element={<AdvAdd/>} />
         <Route path="/advert/remove/:advertId" element={<AdvRemove />} />
         <Route path="/search/:searchPhase" element={<Search />} />
         <Route path="/login" element={<Login />} />

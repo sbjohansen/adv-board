@@ -1,17 +1,29 @@
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
+import { useEffect } from 'react';
 
 import { useState } from 'react';
 import { API_URL } from '../../../config';
 import { getUser } from '../../../redux/usersRedux';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router';
+import { getAdverts, getRequest, getAdvertById, fetchAdverts } from '../../../redux/advertsRedux';
+import { fetchAdvert } from '../../../redux/advertsRedux';
 
-const AdvForm = ({ advert }) => {
-  const advData = advert || '';
+const AdvForm = () => {
+  const { advertId } = useParams();
+  const advert = useSelector(getAdverts);
+  const request = useSelector(getRequest);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchAdvert(advertId));
+  }, []);
+
+  const advData = advertId ? advert[0] : '';
   const userName = useSelector(getUser);
-  console.log(userName);
   const [title, setTitle] = useState(advData.title || '');
   const [description, setDescription] = useState(advData.description || '');
   const [price, setPrice] = useState(advData.price || '');
@@ -31,16 +43,29 @@ const AdvForm = ({ advert }) => {
     formData.append('address', address);
     formData.append('pubDate', pubDate);
     formData.append('user', user);
+    console.log(formData)
+    let options = '';
 
-    const options = {
+    if (!advertId) {
+    options = {
       method: 'POST',
       body: formData,
       credentials: 'include',
-    };
+    }
     fetch(`${API_URL}/ads`, options);
     navigate('/');
+  }
+    if (advertId) {
+      options = {
+        method: 'PUT',
+        body: formData,
+        credentials: 'include',
+      }
+      fetch(`${API_URL}/ads/${advertId}`, options);
+      navigate('/');
+    }
+    
   };
-
   return (
     <div>
       <Container>
@@ -52,6 +77,7 @@ const AdvForm = ({ advert }) => {
               placeholder="Title"
               className="me-2"
               aria-label="Title"
+              value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
             <Form.Label>Description</Form.Label>
@@ -61,6 +87,7 @@ const AdvForm = ({ advert }) => {
               placeholder="Description"
               className="me-2"
               aria-label="Description"
+              value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
             <Form.Label>Price</Form.Label>
@@ -69,6 +96,7 @@ const AdvForm = ({ advert }) => {
               placeholder="Price"
               className="me-2"
               aria-label="Price"
+              value={price}
               onChange={(e) => setPrice(e.target.value)}
             />
             <Form.Label>Image</Form.Label>
@@ -84,6 +112,7 @@ const AdvForm = ({ advert }) => {
               placeholder="Address"
               className="me-2"
               aria-label="Address"
+              value={address}
               onChange={(e) => setAddress(e.target.value)}
             />
           </Form.Group>

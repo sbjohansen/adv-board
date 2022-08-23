@@ -19,6 +19,7 @@ const LOAD_ADVERTS = createActionName('LOAD_ADVERTS');
 const LOAD_ADVERT = createActionName('LOAD_ADVERT');
 const ADD_AD = createActionName('ADD_AD');
 const REMOVE_AD = createActionName('REMOVE_AD');
+const UPDATE_AD = createActionName('UPDATE_AD');
 
 export const startRequest = () => ({ type: START_REQUEST });
 export const stopRequest = () => ({ type: STOP_REQUEST });
@@ -28,6 +29,7 @@ export const loadAdverts = (adverts) => ({ type: LOAD_ADVERTS, payload: { advert
 export const loadAdvert = (advert) => ({ type: LOAD_ADVERT, payload: { advert } });
 export const addAd = (payload) => ({ type: ADD_AD, payload });
 export const removeAd = (id) => ({ type: REMOVE_AD, payload: { id } });
+export const updateAd = (payload) => ({ type: UPDATE_AD, payload });
 //THUNKS
 
 export const fetchAdverts = () => async (dispatch) => {
@@ -55,10 +57,8 @@ export const fetchAdvert = (id) => async (dispatch) => {
 }
 
 export const addAdvert = (advert) => async (dispatch) => {
-  console.log(advert)
   dispatch(startRequest());
   try {
-    console.log(advert)
     const response = await axios.post(`${API_URL}/ads`, advert);
       
     const newAdvert = await response.json();
@@ -106,6 +106,7 @@ export const deleteAdvert = (id) => async (dispatch) => {
 
 
 
+
 // Reducer
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
@@ -150,7 +151,8 @@ export default function reducer(state = initialState, action = {}) {
         return [...state, { ...action.payload, id: shortid() }];
       case REMOVE_AD:
         return [...state.filter((advert) => advert.id !== action.payload.id)];
-
+      case UPDATE_AD:
+        return [...state.map((advert) => (advert.id === action.payload.id ? action.payload : advert))];
     default:
       return state;
   }

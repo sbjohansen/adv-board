@@ -54,7 +54,6 @@ exports.login = async (req, res) => {
           return res.status(400).send({ message: 'Login or password is incorrect' });
         }
         req.session.login = user.login;
-        console.log(req.sessionID);
         req.session.save();
         res.status(200).json({ message: 'User logged in ' + user.login });
       }
@@ -67,9 +66,6 @@ exports.login = async (req, res) => {
 };
 
 exports.getUser = async (req, res) => {
-  console.log(JSON.stringify(req.session))
-  console.log(req.session);
-
   res.send('Im logged in');
 };
 

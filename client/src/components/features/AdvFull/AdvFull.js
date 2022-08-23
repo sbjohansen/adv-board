@@ -91,7 +91,7 @@ const AdvFull = (props) => {
               <Button
                 style={{ width: '100px' }}
                 variant="outline-success"
-                to={`/ads/edit/${advertId}`}
+                to={`/advert/edit/${advertId}`}
                 as={Link}
 
               >

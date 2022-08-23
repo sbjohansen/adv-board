@@ -53,7 +53,6 @@ if (NODE_ENV === 'production') {
   });
 }
 app.use(express.static(path.join(__dirname, '/uploads/')));
-console.log(path.join(__dirname, '/uploads'))
 app.use(express.static(path.join(__dirname, '/client/build')));
 app.use(express.static(path.join(__dirname, '/public')));
 
