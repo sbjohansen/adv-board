@@ -53,6 +53,7 @@ const AdvForm = () => {
       credentials: 'include',
     }
     fetch(`${API_URL}/ads`, options);
+    dispatch(fetchAdverts());
     navigate('/');
   }
     if (advertId) {

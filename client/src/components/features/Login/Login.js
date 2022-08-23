@@ -35,7 +35,7 @@ const Login = () => {
           dispatch(logIn({login}));
           setTimeout(() => {
             navigate('/');
-          }, 3000);
+          }, 2000);
         } else if (response.status === 400) {
           setStatus('clientError');
         } else {

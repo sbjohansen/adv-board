@@ -20,7 +20,7 @@ function App() {
 
   useEffect(() => {
     dispatch(fetchAdverts(dispatch));
-  }, []);
+  }, [dispatch]);
 
   const options = {
     method: 'GET',

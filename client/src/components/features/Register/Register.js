@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { API_URL } from '../../../config';
 import Alert from 'react-bootstrap/Alert';
 import Spinner from 'react-bootstrap/Spinner';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
   const [login, setLogin] = useState('');
@@ -11,6 +12,7 @@ const Register = () => {
   const [tel, setTel] = useState('');
   const [avatar, setAvatar] = useState(null);
   const [status, setStatus] = useState(null);
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -41,6 +43,9 @@ const Register = () => {
       .catch((err) => {
         setStatus('serverError');
       });
+      setTimeout(() => {
+        navigate('/');
+      }, 2000);
   };
 
   return (
