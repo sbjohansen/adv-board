@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo');
 const app = express();
 require('dotenv').config();
+const { MongoClient, ServerApiVersion } = require('mongodb');
 
 //connect to db
 let uri = '';
@@ -21,7 +22,7 @@ const store = MongoStore.create({
   mongoUrl: uri,
   collection: 'sessions',
 });
-mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
 //middleware
 app.use(express.urlencoded({ extended: false }));
