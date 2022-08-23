@@ -5,10 +5,12 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { getUser } from '../../../redux/usersRedux';
 import { useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
+import { useState } from 'react';
 
 const MainMenu = () => {
   const user = useSelector(getUser);
+
 
   return (
     <div>
@@ -22,10 +24,6 @@ const MainMenu = () => {
               Home
             </Nav.Link>
           </Nav>
-          <Form className="d-flex">
-            <Form.Control type="search" placeholder="Search" className="me-2" aria-label="Search" />
-            <Button variant="outline-success">Search</Button>
-          </Form>
           {!user && (
             <Nav className="ml-auto">
               <Nav.Link to="/login" as={NavLink}>

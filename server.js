@@ -16,6 +16,7 @@ else if (NODE_ENV === 'test') uri = 'mongodb://localhost:27017/advBookTest';
 else uri = 'mongodb://localhost:27017/advBook';
 
 //connect to db
+
 const store = MongoStore.create({
   mongoUrl: uri,
   collection: 'sessions',
@@ -59,6 +60,7 @@ app.use(express.static(path.join(__dirname, '/public')));
 //routes
 app.use('/api/', advertsRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/users', usersRoutes);
 
 app.use((req, res) => {
   res.status(404).send({ message: 'Not found...' });

@@ -1,7 +1,6 @@
 import { API_URL } from '../config';
 import axios from 'axios';
 
-
 const createActionName = (actionName) => `app/users/${actionName}`;
 export const getUser = ({ users }) => users;
 
@@ -10,6 +9,7 @@ const LOG_OUT = createActionName('LOG_OUT');
 const START_REQUEST = createActionName('START_REQUEST');
 const STOP_REQUEST = createActionName('STOP_REQUEST');
 const ERROR_REQUEST = createActionName('ERROR_REQUEST');
+const FIND_USER = createActionName('FIND_USER');
 
 export const startRequest = () => ({ type: START_REQUEST });
 export const stopRequest = () => ({ type: STOP_REQUEST });
@@ -17,13 +17,14 @@ export const errorRequest = (error) => ({ type: ERROR_REQUEST, payload: { error 
 
 export const logIn = (payload) => ({ type: LOG_IN, payload });
 export const logOut = () => ({ type: LOG_OUT });
+export const loadUser = (payload) => ({ type: FIND_USER, payload });
 
 export const fetchUser = () => async (dispatch) => {
   dispatch(startRequest());
   try {
     const response = await axios.get(`${API_URL}/auth/user`);
     const user = response.data;
-    dispatch(logIn({user}));
+    dispatch(logIn({ user }));
   } catch (error) {
     dispatch(errorRequest(error));
   }
@@ -35,6 +36,8 @@ const usersReducer = (state = [], action) => {
       return action.payload;
     case LOG_OUT:
       return null;
+    case FIND_USER:
+      return action.payload;
     default:
       return state;
   }

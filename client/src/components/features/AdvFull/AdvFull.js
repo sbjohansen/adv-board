@@ -1,6 +1,6 @@
 import { useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAdverts, getRequest, getAdvertById, fetchAdverts } from '../../../redux/advertsRedux';
+import { getAdverts, getRequest } from '../../../redux/advertsRedux';
 
 import { fetchAdvert } from '../../../redux/advertsRedux';
 import { useEffect } from 'react';
@@ -10,7 +10,7 @@ import Spinner from 'react-bootstrap/Spinner';
 
 import ListGroup from 'react-bootstrap/ListGroup';
 import { IMGS_URL } from '../../../config.js';
-import { getUser } from '../../../redux/usersRedux';
+import { getUser, fetchUserByLogin } from '../../../redux/usersRedux';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
@@ -25,9 +25,12 @@ const AdvFull = (props) => {
     dispatch(fetchAdvert(advertId));
   }, []);
 
+
   const advData = advert[0];
   const user = useSelector(getUser);
-  
+
+  console.log(user)
+
   return (
     <div>
       {request.pending ? (

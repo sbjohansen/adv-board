@@ -74,12 +74,10 @@ exports.updateAdvert = async (req, res, next) => {
 exports.getAdvertBySearchPhase = async (req, res, next) => {
   try {
     const adverts = await Advert.find({
-      $text: {
-        $search: req.params.searchPhase,
-      },
+      $text: { $search: req.params.searchPhase },
     });
     res.json(adverts);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
-};
+}

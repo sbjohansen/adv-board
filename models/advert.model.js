@@ -31,5 +31,6 @@ const advertSchema = new mongoose.Schema({
     required: false,
   },
 });
+advertSchema.index({'$**': 'text'});
 
 module.exports = mongoose.model('Advert', advertSchema);
