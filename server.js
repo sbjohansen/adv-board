@@ -6,10 +6,11 @@ const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo');
 const app = express();
 require('dotenv').config();
+const { MongoClient, ServerApiVersion } = require('mongodb');
 
 //connect to db
 let uri = '';
-const { NODE_ENV } = process.env;
+const NODE_ENV = process.env.NODE_ENV;
 
 if (NODE_ENV === 'production') uri = process.env.DB_URL;
 else if (NODE_ENV === 'test') uri = 'mongodb://localhost:27017/advBookTest';
@@ -41,6 +42,7 @@ app.use(
     }
   })
 );
+app.use(express.static(path.join(__dirname, '/client/build')));
 
 //import routes
 const advertsRoutes = require('./routes/adverts.routes');
@@ -54,7 +56,6 @@ if (NODE_ENV === 'production') {
   });
 }
 app.use(express.static(path.join(__dirname, '/uploads/')));
-app.use(express.static(path.join(__dirname, '/client/build')));
 app.use(express.static(path.join(__dirname, '/public')));
 
 //routes
