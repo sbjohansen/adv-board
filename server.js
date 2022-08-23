@@ -8,9 +8,12 @@ const app = express();
 require('dotenv').config();
 
 //connect to db
-let uri = process.env.DB_URL;
-const NODE_ENV = process.env;
+let uri = '';
+const NODE_ENV = process.env.NODE_ENV;
 
+if (NODE_ENV === 'production') uri = process.env.DB_URL;
+else if (NODE_ENV === 'test') uri = 'mongodb://localhost:27017/advBookTest';
+else uri = 'mongodb://localhost:27017/advBook';
 
 //connect to db
 
@@ -18,7 +21,7 @@ const store = MongoStore.create({
   mongoUrl: uri,
   collection: 'sessions',
 });
-mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(uri, { useNewUrlParser: true });
 
 //middleware
 app.use(express.urlencoded({ extended: false }));
@@ -30,9 +33,6 @@ app.use(
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create(mongoose.connection),
-    cookie: {
-      secure: process.env.NODE_ENV == "production",
-    }
   })
 );
 
@@ -47,10 +47,9 @@ app.use(express.static(path.join(__dirname, '/client/build')));
 app.use(express.static(path.join(__dirname, '/uploads/')));
 app.use(express.static(path.join(__dirname, '/public')));
 
-  app.get('*', (req, res) => {
+  app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname + '/client/build/index.html'));
   });
-
 
 //routes
 app.use('/api/', advertsRoutes);
