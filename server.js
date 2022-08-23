@@ -8,13 +8,8 @@ const app = express();
 require('dotenv').config();
 
 //connect to db
-let uri = '';
+const uri = 'mongodb+srv://plushack:ovKzs9COC8P0s0r6@cluster0.so0dxnp.mongodb.net/advBoard';
 const NODE_ENV = process.env.NODE_ENV;
-
-if (NODE_ENV === 'production') uri = process.env.DB_URL;
-else if (NODE_ENV === 'test') uri = 'mongodb://localhost:27017/advBookTest';
-else uri = 'mongodb://localhost:27017/advBook';
-
 //connect to db
 
 const store = MongoStore.create({
@@ -47,9 +42,9 @@ app.use(express.static(path.join(__dirname, '/client/build')));
 app.use(express.static(path.join(__dirname, '/uploads/')));
 app.use(express.static(path.join(__dirname, '/public')));
 
-  app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname + '/client/build/index.html'));
-  });
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname + '/client/build/index.html'));
+});
 
 //routes
 app.use('/api/', advertsRoutes);
