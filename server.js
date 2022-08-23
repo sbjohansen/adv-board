@@ -38,7 +38,6 @@ app.use(
     }
   })
 );
-app.use(express.static(path.join(__dirname, '/client/build')));
 
 //import routes
 const advertsRoutes = require('./routes/adverts.routes');
@@ -51,8 +50,10 @@ if (NODE_ENV === 'production') {
     res.sendFile(path.join(__dirname + '/client/build/index.html'));
   });
 }
+app.use(express.static(path.join(__dirname, '/client/build')));
 app.use(express.static(path.join(__dirname, '/uploads/')));
 app.use(express.static(path.join(__dirname, '/public')));
+app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html')));
 
 //routes
 app.use('/api/', advertsRoutes);
