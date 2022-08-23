@@ -8,10 +8,12 @@ const app = express();
 require('dotenv').config();
 
 //connect to db
-const uri = process.env.DB_URL;
+let uri = '';
 const NODE_ENV = process.env.NODE_ENV;
 
-
+if (NODE_ENV === 'production') uri = process.env.DB_URL;
+else if (NODE_ENV === 'test') uri = 'mongodb://localhost:27017/advBookTest';
+else uri = 'mongodb://localhost:27017/advBook';
 
 //connect to db
 
@@ -48,7 +50,7 @@ if (NODE_ENV === 'production') {
     res.sendFile(path.join(__dirname + '/client/build/index.html'));
   });
 }
-app.use(express.static(path.join(__dirname, '/client/build')));
+
 app.use(express.static(path.join(__dirname, '/uploads/')));
 app.use(express.static(path.join(__dirname, '/public')));
 
