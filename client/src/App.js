@@ -18,6 +18,10 @@ import { useEffect } from 'react';
 function App() {
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(fetchAdverts(dispatch));
+  }, []);
+
   const options = {
     method: 'GET',
   };
@@ -27,17 +31,13 @@ function App() {
     }
   });
 
-  useEffect(() => {
-    dispatch(fetchAdverts());
-  }, []);
-
   return (
     <MainLayout>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/advert/:advertId" element={<AdvFull />} />
         <Route path="/advert/add" element={<AdvAdd />} />
-        <Route path="/advert/edit/:advertId" element={<AdvAdd/>} />
+        <Route path="/advert/edit/:advertId" element={<AdvAdd />} />
         <Route path="/advert/remove/:advertId" element={<AdvRemove />} />
         <Route path="/search/:searchPhase" element={<Search />} />
         <Route path="/login" element={<Login />} />
