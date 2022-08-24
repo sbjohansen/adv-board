@@ -8,7 +8,7 @@ const app = express();
 require('dotenv').config();
 
 //connect to db
-const uri = 'mongodb+srv://plushack:ovKzs9COC8P0s0r6@cluster0.so0dxnp.mongodb.net/advBoard';
+const uri = process.env.DB_URL;
 const NODE_ENV = process.env.NODE_ENV;
 //connect to db
 
